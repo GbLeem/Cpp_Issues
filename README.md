@@ -1,6 +1,6 @@
 # Cpp_Issues
 
-### Memory Leak
+### 1. Memory Leak (using smart pointer)
 * TEXT_RPG 폴더의 코드 참고
   * 메모리 누수를 방지하기 위해 raw pointer에서 smart pointer로 교체한 버전
    * unique_ptr을 사용
