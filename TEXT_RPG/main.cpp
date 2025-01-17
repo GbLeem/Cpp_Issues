@@ -12,28 +12,24 @@ using namespace std;
 int main()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	//_CrtSetBreakAlloc(170);
+	//_CrtSetBreakAlloc(184); //184 179 174
 
 	cout << "이름 입력: ";
 	string name;
 	cin >> name;
-	unique_ptr<Character> playerCharacter = move(Character::GetInstance(name));
-	
-	Item* newItem = nullptr;
+	unique_ptr<Character> playerCharacter = move(Character::GetInstance(name));	
 	
 	for (int i = 0; i < 3; ++i)
 	{
 		string itemName;
 		cout << "아이템 이름 입력: ";
-		cin >> itemName;
+		cin >> itemName;		
 		
 		//홀수
 		if (i % 2 != 0)
-			newItem = new Weapon(itemName);
+			playerCharacter->AddItemToInventory(make_unique<Weapon>(itemName));
 		else
-			newItem = new Potion(itemName);		
-
-		playerCharacter->AddItemToInventory(newItem);
+			playerCharacter->AddItemToInventory(make_unique<Potion>(itemName));
 	}		
 
 	int menuIdx = 0;
@@ -54,10 +50,8 @@ int main()
 			cin.clear();
 			cin.ignore(1024, '\n');
 			cout << "잘못된 입력입니다. 다시 입력해주세요: ";
-
 			system("cls");
-		}
-		
+		}		
 
 		switch (menuIdx)
 		{
@@ -66,27 +60,28 @@ int main()
 			cout << "== 아이템 사용 ==\n";
 			playerCharacter->UseItem();
 			break;
+
 		case 2:
 			system("cls");
 			cout << "== 아이템 보기 ==\n";
 			playerCharacter->ShowItems();
 			break;
+
 		case 3:
 			system("cls");
 			cout << "...\n";
 			break;
+
 		default:
 			break;
 
 		case 0:
 			system("cls");			
 			cout << "게임 종료!\n";	
-			playerCharacter->DestroyItems();
 			return 0;
 		}
 
 		system("pause");
 		system("cls");
 	}
-
 }

@@ -1,12 +1,7 @@
-#define _CRTDBG_MAP_ALLOC
 #include <iostream>
 #include "Character.h"
 #include "Item.h"
 using namespace std;
-
-#ifdef _DEBUG
-    #define new new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
-#endif
 
 unique_ptr<Character> Character::instance = nullptr;
 
@@ -31,34 +26,22 @@ void Character::UseItem()
         cout << "인벤토리가 비었습니다\n";
         return;
     }
-
-    Item* useItem = mItems.back(); 
+    
+    mItems.back()->Use();
     mItems.pop_back();
-    useItem->Use();
-
-    delete useItem;
 }
 
-void Character::AddItemToInventory(Item* item)
+void Character::AddItemToInventory(unique_ptr<Item> item)
 {
-    mItems.push_back(item);
+    mItems.push_back(move(item));
 }
 
 void Character::ShowItems()
 {
-    for (const Item* item : mItems)
+    for (const unique_ptr<Item>& item : mItems) // 레퍼런스
     {
         cout << item->GetName() << "\n";
     }
-}
-
-void Character::DestroyItems()
-{
-    for (Item* item : mItems)
-    {
-        delete item;
-    }
-    mItems.clear();
 }
 
 Character::Character(string name)

@@ -14,15 +14,13 @@ public:
 	~Character();
 	static unique_ptr<Character>& GetInstance(string name);
 	void UseItem();
-	void AddItemToInventory(Item* item);
+	void AddItemToInventory(unique_ptr<Item> item);
 	void ShowItems();
-
-	void DestroyItems();
 
 private:
 	Character(string name);
 
 	static unique_ptr<Character> instance;
 	string mName;
-	vector<Item*> mItems;
+	vector<unique_ptr<Item>> mItems;
 };
