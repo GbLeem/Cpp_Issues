@@ -17,7 +17,7 @@ int main()
 	cout << "이름 입력: ";
 	string name;
 	cin >> name;
-	Character* playerCharacter = Character::GetInstance(name);
+	unique_ptr<Character> playerCharacter = move(Character::GetInstance(name));
 	
 	Item* newItem = nullptr;
 	
@@ -36,7 +36,7 @@ int main()
 		playerCharacter->AddItemToInventory(newItem);
 	}		
 
-	int menuIdx = -1;
+	int menuIdx = 0;
 
 	while (1)
 	{

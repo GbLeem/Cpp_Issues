@@ -15,13 +15,13 @@ Character::~Character()
     cout << "캐릭터는 사라집니다\n";
 }
 
-Character* Character::GetInstance(string name)
+unique_ptr<Character>& Character::GetInstance(string name)
 {
     if (!instance)
     {
         instance = unique_ptr<Character>(new Character(name));
     }
-    return instance.get();
+    return instance;
 }
 
 void Character::UseItem()

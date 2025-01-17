@@ -12,7 +12,7 @@ public:
 	Character(const Character& other) = delete;
 	Character& operator= (const Character&) = delete;	
 	~Character();
-	static Character* GetInstance(string name);
+	static unique_ptr<Character>& GetInstance(string name);
 	void UseItem();
 	void AddItemToInventory(Item* item);
 	void ShowItems();
